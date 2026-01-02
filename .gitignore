@@ -59,6 +59,10 @@ tmp/
 temp/
 *.tmp
 
+# Local storage (user uploads)
+backend/local_storage/uploads/
+frontend/.next/
+
 # Secrets
 secrets/
 *.pem
