@@ -50,7 +50,7 @@ class Settings(BaseSettings):
     # Monitoring
     SENTRY_DSN: str = ""
     
-    # CORS
+    # CORS (comma-separated string, will be converted to list)
     CORS_ORIGINS: str = "http://localhost:3000"
     
     # API Base URL (for generating URLs in production)
@@ -59,8 +59,7 @@ class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"  # development, production
     
-    @property
-    def cors_origins_list(self) -> List[str]:
+    def get_cors_origins_list(self) -> List[str]:
         """Parse CORS_ORIGINS string into a list"""
         if isinstance(self.CORS_ORIGINS, str):
             return [origin.strip() for origin in self.CORS_ORIGINS.split(',') if origin.strip()]
