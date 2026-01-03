@@ -51,7 +51,7 @@ class Settings(BaseSettings):
     SENTRY_DSN: str = ""
     
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000"]
+    CORS_ORIGINS: str = "http://localhost:3000"
     
     # API Base URL (for generating URLs in production)
     API_BASE_URL: str = "http://localhost:8000"
@@ -59,12 +59,12 @@ class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"  # development, production
     
-    @field_validator('CORS_ORIGINS', mode='before')
-    @classmethod
-    def parse_cors_origins(cls, v):
-        if isinstance(v, str):
-            return [origin.strip() for origin in v.split(',') if origin.strip()]
-        return v
+    @property
+    def cors_origins_list(self) -> List[str]:
+        """Parse CORS_ORIGINS string into a list"""
+        if isinstance(self.CORS_ORIGINS, str):
+            return [origin.strip() for origin in self.CORS_ORIGINS.split(',') if origin.strip()]
+        return self.CORS_ORIGINS if isinstance(self.CORS_ORIGINS, list) else []
     
     class Config:
         # Use absolute path to .env file in backend directory
