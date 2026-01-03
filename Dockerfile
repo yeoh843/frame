@@ -20,5 +20,5 @@ COPY backend/ .
 EXPOSE 8080
 
 # Default command (Cloud Run sets PORT env var)
-CMD python -c "import os; import uvicorn; port = int(os.environ.get('PORT', 8080)); uvicorn.run('app.main:app', host='0.0.0.0', port=port)"
+CMD ["python", "start_server.py"]
 
