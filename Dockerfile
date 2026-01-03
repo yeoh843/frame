@@ -16,12 +16,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY backend/ .
 
-# Make startup script executable
-RUN chmod +x start.sh
-
 # Expose port (Cloud Run uses PORT env var, default to 8080)
 EXPOSE 8080
 
 # Default command (Cloud Run sets PORT env var)
-CMD ["./start.sh"]
+CMD python -c "import os; import uvicorn; port = int(os.environ.get('PORT', 8080)); uvicorn.run('app.main:app', host='0.0.0.0', port=port)"
 
