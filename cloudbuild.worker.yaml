@@ -1,0 +1,13 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', 'Dockerfile.worker', '-t', 'gcr.io/$PROJECT_ID/frame-worker:latest', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/frame-worker:latest']
+
+images:
+  - 'gcr.io/$PROJECT_ID/frame-worker:latest'
+
+
